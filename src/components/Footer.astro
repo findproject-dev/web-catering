@@ -1,0 +1,94 @@
+---
+import { BRAND_INFO } from '../data/cateringData';
+import { getWhatsAppUrl } from '../utils/whatsapp';
+
+const waUrl = getWhatsAppUrl('general');
+---
+
+<footer class="bg-[#263A30] text-[#F4EBDD] border-t border-[#B78B5B]/20 pt-16 pb-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[#F4EBDD]/15">
+      
+      <!-- Brand column -->
+      <div class="space-y-4">
+        <a href="/" class="inline-block">
+          <span class="font-serif text-2xl font-bold tracking-tight text-[#F4EBDD]">FindSeleroo</span>
+          <span class="block text-[0.68rem] tracking-widest uppercase text-[#B78B5B]">Catering Semarang</span>
+        </a>
+        <p class="text-sm text-[#F4EBDD]/80 leading-relaxed">
+          {BRAND_INFO.tagline}
+        </p>
+        <p class="text-xs text-[#F4EBDD]/70 leading-relaxed">
+          Solusi boga premium untuk kebutuhan harian, makan bersama keluarga, nasi box kantor, hingga prasmanan acara perayaan di Semarang.
+        </p>
+        <div class="pt-2">
+          <span class="inline-block px-3 py-1 bg-[#B78B5B]/20 text-[#B78B5B] border border-[#B78B5B]/40 text-xs font-medium rounded-xs">
+            {BRAND_INFO.minOrderRule}
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="font-serif text-lg font-semibold text-[#F4EBDD] mb-4">Navigasi Halaman</h4>
+        <ul class="space-y-2.5 text-sm text-[#F4EBDD]/80">
+          <li><a href="/" class="hover:text-[#B78B5B] transition-colors">Home</a></li>
+          <li><a href="/menu" class="hover:text-[#B78B5B] transition-colors">Daftar Menu Makanan</a></li>
+          <li><a href="/paket" class="hover:text-[#B78B5B] transition-colors">Katalog Paket Catering</a></li>
+          <li><a href="/galeri" class="hover:text-[#B78B5B] transition-colors">Galeri Dokumentasi & Foto</a></li>
+          <li><a href="/kontak" class="hover:text-[#B78B5B] transition-colors">Kontak & Pemesanan</a></li>
+        </ul>
+      </div>
+
+      <!-- Catering Services -->
+      <div>
+        <h4 class="font-serif text-lg font-semibold text-[#F4EBDD] mb-4">Layanan Kami</h4>
+        <ul class="space-y-2.5 text-sm text-[#F4EBDD]/80">
+          <li><a href="/paket#daily" class="hover:text-[#B78B5B] transition-colors">Catering Harian Semarang</a></li>
+          <li><a href="/paket#family" class="hover:text-[#B78B5B] transition-colors">Family Dining & Kumpul Keluarga</a></li>
+          <li><a href="/paket#office" class="hover:text-[#B78B5B] transition-colors">Nasi Box Kantor & Meeting</a></li>
+          <li><a href="/paket#event" class="hover:text-[#B78B5B] transition-colors">Event & Gathering Acara</a></li>
+          <li><a href="/paket#wedding" class="hover:text-[#B78B5B] transition-colors">Prasmanan Resepsi Pernikahan</a></li>
+          <li><a href="/paket#snack" class="hover:text-[#B78B5B] transition-colors">Snack Box & Coffee Break</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="space-y-3">
+        <h4 class="font-serif text-lg font-semibold text-[#F4EBDD] mb-4">Informasi Kontak</h4>
+        <p class="text-sm text-[#F4EBDD]/85 flex items-start gap-2.5">
+          <svg class="w-5 h-5 text-[#B78B5B] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>{BRAND_INFO.location}</span>
+        </p>
+        <p class="text-sm text-[#F4EBDD]/85 flex items-start gap-2.5">
+          <svg class="w-5 h-5 text-[#B78B5B] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-xs leading-relaxed">{BRAND_INFO.operatingHours}</span>
+        </p>
+        <div class="pt-3">
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-[#B78B5B] text-[#263A30] hover:bg-[#c99a68] rounded-xs font-semibold text-xs tracking-wider uppercase transition-colors"
+          >
+            Konsultasi WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom note & copyright -->
+    <div class="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#F4EBDD]/60 gap-4">
+      <p>© {new Date().getFullYear()} FindSeleroo Catering Semarang. Hak Cipta Dilindungi.</p>
+      <p class="text-center md:text-right max-w-xl text-[0.72rem] text-[#F4EBDD]/50">
+        Informasi harga dan spesifikasi menu yang tercantum merupakan ilustrasi estimasi resmi dan dapat disesuaikan pada saat konfirmasi pemesanan.
+      </p>
+    </div>
+  </div>
+</footer>

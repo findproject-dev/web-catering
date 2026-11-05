@@ -1,0 +1,61 @@
+---
+import { getWhatsAppUrl } from '../utils/whatsapp';
+
+const waUrl = getWhatsAppUrl('general');
+---
+
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+  
+  <!-- Back to Top Button (Hidden by default, shown via scroll listener) -->
+  <button
+    type="button"
+    id="back-to-top"
+    aria-label="Kembali ke atas halaman"
+    class="opacity-0 pointer-events-none transition-all duration-300 p-2.5 rounded-full bg-[#263A30] text-[#F4EBDD] hover:bg-[#1a2820] shadow-lg border border-[#B78B5B]/30 hover:scale-105 active:scale-95"
+  >
+    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
+    </svg>
+  </button>
+
+  <!-- Floating WhatsApp Action -->
+  <a
+    href={waUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Hubungi FindSeleroo via WhatsApp"
+    class="flex items-center gap-3 bg-[#25D366] hover:bg-[#20ba59] text-white px-4 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 group"
+  >
+    <span class="relative flex h-6 w-6 items-center justify-center">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-40"></span>
+      <svg class="w-6 h-6 fill-current relative" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.187-2.59-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.182-.077.357.101.174.45 1.014 1.157 1.644.912.812 1.637 1.059 1.868 1.175.231.116.368.102.506-.058.138-.16.592-.693.75-0.93.159-.237.318-.198.535-.116.217.082 1.372.646 1.609.764.237.118.395.176.453.275.058.099.058.577-.086.982z"/>
+      </svg>
+    </span>
+    <span class="hidden sm:inline font-medium text-sm pr-1 tracking-wide">
+      Tanya Catering
+    </span>
+  </a>
+
+</div>
+
+<script>
+  const backToTopBtn = document.getElementById('back-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 350) {
+      backToTopBtn?.classList.remove('opacity-0', 'pointer-events-none');
+      backToTopBtn?.classList.add('opacity-100', 'pointer-events-auto');
+    } else {
+      backToTopBtn?.classList.add('opacity-0', 'pointer-events-none');
+      backToTopBtn?.classList.remove('opacity-100', 'pointer-events-auto');
+    }
+  });
+
+  backToTopBtn?.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>

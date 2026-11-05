@@ -1,0 +1,157 @@
+---
+import { BRAND_INFO } from '../data/cateringData';
+import { getWhatsAppUrl } from '../utils/whatsapp';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/menu', label: 'Menu' },
+  { href: '/paket', label: 'Paket' },
+  { href: '/galeri', label: 'Galeri' },
+  { href: '/kontak', label: 'Kontak' },
+];
+
+const generalWaUrl = getWhatsAppUrl('general');
+---
+
+<!-- Top Announcement Bar -->
+<div class="bg-[#1e2f26] text-[#F4EBDD]/90 text-[0.72rem] py-1.5 px-4 border-b border-[#B78B5B]/20">
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span>Catering Terpercaya di Semarang • Pemesanan Acara & Santap Harian</span>
+    </div>
+    <div class="hidden md:flex items-center gap-4 text-[#F4EBDD]/75 text-[0.68rem]">
+      <span>Min. Order 10 Pax</span>
+      <span>•</span>
+      <a href="/kontak" class="hover:text-[#B78B5B] transition-colors">Lihat Wilayah Pengantaran</a>
+    </div>
+  </div>
+</div>
+
+<!-- Main Sticky Header -->
+<header class="sticky top-0 z-50 bg-[#F4EBDD]/95 backdrop-blur-md border-b border-[#263A30]/10 transition-all duration-300" id="main-nav">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Logo / Brand Wordmark -->
+      <a href="/" class="flex flex-col group text-left">
+        <span class="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#263A30] group-hover:text-[#B78B5B] transition-colors">
+          FindSeleroo
+        </span>
+        <span class="text-[0.68rem] tracking-widest uppercase font-medium text-[#B78B5B] -mt-1">
+          Catering Semarang
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8" aria-label="Navigasi Utama">
+        {navLinks.map((link) => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a
+              href={link.href}
+              class={`text-sm font-medium tracking-wide transition-colors py-1 border-b-2 ${
+                isActive
+                  ? 'text-[#263A30] border-[#B78B5B] font-semibold'
+                  : 'text-[#292720]/80 hover:text-[#263A30] border-transparent hover:border-[#B78B5B]/50'
+              }`}
+            >
+              {link.label}
+            </a>
+          );
+        })}
+      </nav>
+
+      <!-- Desktop WhatsApp Action -->
+      <div class="hidden md:flex items-center space-x-4">
+        <a
+          href={generalWaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-[#263A30] text-[#F4EBDD] hover:bg-[#1a2820] text-sm font-medium tracking-wide shadow-sm hover:shadow transition-all group"
+        >
+          <svg class="w-4 h-4 text-[#B78B5B] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.187-2.59-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.182-.077.357.101.174.45 1.014 1.157 1.644.912.812 1.637 1.059 1.868 1.175.231.116.368.102.506-.058.138-.16.592-.693.75-0.93.159-.237.318-.198.535-.116.217.082 1.372.646 1.609.764.237.118.395.176.453.275.058.099.058.577-.086.982z"/>
+          </svg>
+          <span>Pesan via WhatsApp</span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <div class="flex md:hidden items-center">
+        <button
+          type="button"
+          id="mobile-menu-btn"
+          aria-expanded="false"
+          aria-label="Buka Menu Navigasi"
+          class="p-2 text-[#263A30] hover:text-[#B78B5B] focus:outline-none"
+        >
+          <svg id="menu-icon-open" class="w-7 h-7 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="menu-icon-close" class="w-7 h-7 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-[#F4EBDD] border-b border-[#263A30]/15 px-4 pt-3 pb-6 shadow-lg">
+    <div class="flex flex-col space-y-3">
+      {navLinks.map((link) => {
+        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        return (
+          <a
+            href={link.href}
+            class={`px-3 py-2 text-base font-medium transition-colors rounded-sm ${
+              isActive
+                ? 'bg-[#263A30] text-[#F4EBDD]'
+                : 'text-[#292720] hover:bg-[#263A30]/10 hover:text-[#263A30]'
+            }`}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+      <div class="pt-2 border-t border-[#263A30]/10">
+        <a
+          href={generalWaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center gap-2 w-full py-3 rounded-sm bg-[#263A30] text-[#F4EBDD] font-medium text-sm shadow"
+        >
+          <svg class="w-5 h-5 text-[#B78B5B]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.187-2.59-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.182-.077.357.101.174.45 1.014 1.157 1.644.912.812 1.637 1.059 1.868 1.175.231.116.368.102.506-.058.138-.16.592-.693.75-0.93.159-.237.318-.198.535-.116.217.082 1.372.646 1.609.764.237.118.395.176.453.275.058.099.058.577-.086.982z"/>
+          </svg>
+          <span>Pesan via WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-icon-open');
+  const closeIcon = document.getElementById('menu-icon-close');
+
+  if (btn && menu && openIcon && closeIcon) {
+    btn.addEventListener('click', () => {
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', (!isExpanded).toString());
+      menu.classList.toggle('hidden');
+      openIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    });
+  }
+</script>

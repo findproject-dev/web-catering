@@ -1,0 +1,376 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ALL_MENU_ITEMS, BRAND_INFO } from '../data/cateringData';
+import { getWhatsAppUrl } from '../utils/whatsapp';
+
+const customWaUrl = getWhatsAppUrl('custom', { event: 'Kebutuhan Menu Khusus' });
+const pricelistWaUrl = `https://wa.me/${BRAND_INFO.whatsappNumber}?text=${encodeURIComponent('Halo FindSeleroo, saya ingin meminta brosur dan pricelist lengkap catering untuk referensi acara/kantor saya. Terima kasih!')}`;
+---
+
+<Layout
+  title="Daftar Menu Makanan — FindSeleroo Catering Semarang"
+  description="Katalog menu masakan nusantara FindSeleroo Catering Semarang: Ayam Bakar Rempah, Rendang Daging Sapi, Gurame Asam Manis, dan aneka lauk lezat lainnya."
+  currentPath="/menu"
+>
+  <!-- Page Header -->
+  <section class="bg-[#263A30] text-[#F4EBDD] py-16 sm:py-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <span class="inline-block px-3 py-1 bg-[#B78B5B]/20 border border-[#B78B5B]/40 text-[#B78B5B] text-xs font-semibold tracking-widest uppercase mb-4 rounded-xs">
+        Katalog Hidangan
+      </span>
+      <h1 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight mb-4">
+        Daftar Menu FindSeleroo
+      </h1>
+      <p class="text-sm sm:text-base text-[#F4EBDD]/80 max-w-2xl mx-auto leading-relaxed">
+        Pilihan olahan nusantara bercita rasa kaya rempah, dimasak dengan bahan segar berkualitas tinggi untuk menyempurnakan santapan Anda di Semarang.
+      </p>
+      
+      <!-- Indicative Pricing & Min Order Note -->
+      <div class="mt-8 inline-flex flex-wrap items-center justify-center gap-4 bg-[#1b2b23] px-5 py-2.5 rounded-sm border border-[#B78B5B]/30 text-xs text-[#F4EBDD]/80">
+        <span class="flex items-center gap-1.5 text-[#B78B5B] font-semibold">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {BRAND_INFO.minOrderRule}
+        </span>
+        <span class="hidden sm:inline text-white/30">•</span>
+        <span>Harga merupakan estimasi acuan/demo sebelum konfirmasi resmi.</span>
+      </div>
+
+      <!-- Quick PDF Pricelist Download Action -->
+      <div class="mt-6">
+        <a
+          href={pricelistWaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#B78B5B] hover:bg-[#a67c4e] text-[#263A30] text-xs font-bold tracking-wide rounded-xs shadow transition-all"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span>Minta Pricelist PDF & Brosur via WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter & Catalog Section -->
+  <section class="py-16 sm:py-20 bg-[#F4EBDD]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Live Search Bar -->
+      <div class="max-w-xl mx-auto mb-8">
+        <div class="relative">
+          <input
+            type="text"
+            id="menu-search-input"
+            placeholder="Cari menu favorit (contoh: ayam bakar, rendang, gurame, sayur)..."
+            class="w-full pl-11 pr-10 py-3.5 bg-white border border-[#263A30]/20 rounded-sm text-sm text-[#292720] placeholder-[#292720]/45 shadow-xs focus:outline-none focus:border-[#263A30] focus:ring-1 focus:ring-[#263A30]"
+          />
+          <svg class="w-5 h-5 text-[#263A30]/50 absolute left-3.5 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <button
+            type="button"
+            id="clear-search-btn"
+            aria-label="Bersihkan pencarian"
+            class="hidden absolute right-3.5 top-3.5 text-[#292720]/40 hover:text-[#263A30]"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex items-center justify-center mb-6">
+        <div class="flex flex-wrap items-center justify-center gap-2 p-1.5 bg-white/70 border border-[#263A30]/15 rounded-sm max-w-3xl" id="menu-filter-container">
+          <button
+            type="button"
+            data-category="all"
+            class="filter-btn active px-4 py-2 text-xs sm:text-sm font-medium tracking-wide rounded-xs transition-all bg-[#263A30] text-[#F4EBDD]"
+          >
+            Semua Menu
+          </button>
+          <button
+            type="button"
+            data-category="ayam"
+            class="filter-btn px-4 py-2 text-xs sm:text-sm font-medium tracking-wide rounded-xs transition-all text-[#292720] hover:bg-[#263A30]/10"
+          >
+            Ayam
+          </button>
+          <button
+            type="button"
+            data-category="daging"
+            class="filter-btn px-4 py-2 text-xs sm:text-sm font-medium tracking-wide rounded-xs transition-all text-[#292720] hover:bg-[#263A30]/10"
+          >
+            Daging
+          </button>
+          <button
+            type="button"
+            data-category="ikan-seafood"
+            class="filter-btn px-4 py-2 text-xs sm:text-sm font-medium tracking-wide rounded-xs transition-all text-[#292720] hover:bg-[#263A30]/10"
+          >
+            Ikan & Seafood
+          </button>
+          <button
+            type="button"
+            data-category="sayuran"
+            class="filter-btn px-4 py-2 text-xs sm:text-sm font-medium tracking-wide rounded-xs transition-all text-[#292720] hover:bg-[#263A30]/10"
+          >
+            Sayuran
+          </button>
+          <button
+            type="button"
+            data-category="nasi-pelengkap"
+            class="filter-btn px-4 py-2 text-xs sm:text-sm font-medium tracking-wide rounded-xs transition-all text-[#292720] hover:bg-[#263A30]/10"
+          >
+            Nasi & Pelengkap
+          </button>
+          <button
+            type="button"
+            data-category="snack"
+            class="filter-btn px-4 py-2 text-xs sm:text-sm font-medium tracking-wide rounded-xs transition-all text-[#292720] hover:bg-[#263A30]/10"
+          >
+            Snack
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Count Info -->
+      <div class="flex items-center justify-between mb-8 text-xs text-[#292720]/70 max-w-7xl mx-auto px-1">
+        <span id="results-count-text">Menampilkan seluruh {ALL_MENU_ITEMS.length} pilihan menu</span>
+        <span class="hidden sm:inline font-medium text-[#263A30]">Kota Semarang & Sekitarnya</span>
+      </div>
+
+      <!-- Menu Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-grid">
+        {ALL_MENU_ITEMS.map((item) => {
+          const itemWaUrl = getWhatsAppUrl('menu', { name: item.name });
+          const searchKeywords = `${item.name} ${item.description} ${item.categoryLabel} ${item.tags?.join(' ') || ''}`.toLowerCase();
+          return (
+            <div
+              class="menu-item bg-white border border-[#263A30]/10 rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
+              data-item-category={item.category}
+              data-keywords={searchKeywords}
+            >
+              <div class="aspect-[4/3] overflow-hidden relative">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute top-3 left-3 flex gap-2">
+                  <span class="bg-[#263A30] text-[#F4EBDD] px-2.5 py-1 text-[0.68rem] font-medium tracking-wider uppercase rounded-xs">
+                    {item.categoryLabel}
+                  </span>
+                  {item.isBestSeller && (
+                    <span class="bg-[#B78B5B] text-[#263A30] px-2.5 py-1 text-[0.68rem] font-bold tracking-wider uppercase rounded-xs shadow">
+                      Signature
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div class="p-6 flex flex-col flex-grow">
+                <h3 class="font-serif text-xl font-bold text-[#263A30] mb-2">{item.name}</h3>
+                <div class="text-lg font-bold text-[#B78B5B] mb-3">
+                  {item.formattedPrice} <span class="text-xs font-normal text-[#292720]/60">/ porsi</span>
+                </div>
+                <p class="text-xs text-[#292720]/75 leading-relaxed mb-6 flex-grow">
+                  {item.description}
+                </p>
+
+                <div class="pt-4 border-t border-gray-100 flex items-center justify-between mt-auto">
+                  <span class="text-[0.72rem] text-[#292720]/60">Min. order 10 pax</span>
+                  <a
+                    href={itemWaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 px-4 py-2 bg-[#263A30] hover:bg-[#1a2820] text-[#F4EBDD] text-xs font-medium tracking-wide rounded-xs transition-colors"
+                  >
+                    <span>Pesan via WA</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <!-- Empty State -->
+      <div id="no-menu-results" class="hidden text-center py-16 bg-white/50 border border-dashed border-[#263A30]/20 rounded-sm">
+        <p class="font-serif text-lg text-[#263A30] font-bold mb-2">Tidak ada menu yang sesuai dengan pencarian Anda</p>
+        <p class="text-xs text-[#292720]/70 mb-4">Coba gunakan kata kunci lain atau reset filter kategori.</p>
+        <button
+          type="button"
+          id="reset-filter-btn"
+          class="inline-flex items-center px-4 py-2 bg-[#263A30] text-[#F4EBDD] text-xs font-medium rounded-xs"
+        >
+          Reset Pencarian & Kategori
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Custom Menu Consultation Section -->
+  <section class="py-20 bg-white border-t border-[#263A30]/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-[#263A30] text-[#F4EBDD] p-8 sm:p-12 lg:p-16 rounded-sm shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <div class="lg:col-span-8 space-y-4">
+          <span class="text-xs font-semibold tracking-widest uppercase text-[#B78B5B] block">Menu Kustom Sesuai Selera</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold leading-tight">
+            Memiliki Preferensi Menu Khusus atau Anggaran Tertentu?
+          </h2>
+          <p class="text-sm text-[#F4EBDD]/80 leading-relaxed max-w-2xl">
+            FindSeleroo mendukung penyusunan paket custom (kombinasi lauk favorit, penyesuaian bumbu rendah sodium/gula, opsi vegetarian, hingga kemasan eksklusif). Beritahukan kebutuhan acara Anda kepada tim kuliner kami.
+          </p>
+          <div class="flex flex-wrap items-center gap-6 pt-2 text-xs text-[#F4EBDD]/75">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-[#B78B5B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Fleksibel Budget
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-[#B78B5B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Penyesuaian Rasa & Kemasan
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-[#B78B5B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Konsultasi Cepat via WhatsApp
+            </span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col items-start lg:items-end justify-center">
+          <a
+            href={customWaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2.5 px-8 py-4 bg-[#B78B5B] hover:bg-[#a67c4e] text-[#263A30] font-bold text-sm tracking-wide rounded-xs shadow-lg transition-all"
+          >
+            <span>Konsultasi Menu Custom</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const menuItems = document.querySelectorAll('.menu-item');
+  const searchInput = document.getElementById('menu-search-input') as HTMLInputElement;
+  const clearSearchBtn = document.getElementById('clear-search-btn');
+  const emptyState = document.getElementById('no-menu-results');
+  const resetBtn = document.getElementById('reset-filter-btn');
+  const resultsCountText = document.getElementById('results-count-text');
+
+  let currentCategory = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visibleCount = 0;
+
+    menuItems.forEach((item) => {
+      const itemCategory = item.getAttribute('data-item-category') || '';
+      const keywords = item.getAttribute('data-keywords') || '';
+
+      const matchCategory = currentCategory === 'all' || itemCategory === currentCategory;
+      const matchSearch = searchQuery === '' || keywords.includes(searchQuery);
+
+      if (matchCategory && matchSearch) {
+        (item as HTMLElement).style.display = 'flex';
+        visibleCount++;
+      } else {
+        (item as HTMLElement).style.display = 'none';
+      }
+    });
+
+    if (resultsCountText) {
+      resultsCountText.textContent = `Menampilkan ${visibleCount} dari ${menuItems.length} pilihan menu`;
+    }
+
+    if (emptyState) {
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+    }
+  }
+
+  // Category buttons
+  filterButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach((b) => {
+        b.classList.remove('bg-[#263A30]', 'text-[#F4EBDD]');
+        b.classList.add('text-[#292720]');
+      });
+      btn.classList.add('bg-[#263A30]', 'text-[#F4EBDD]');
+      btn.classList.remove('text-[#292720]');
+
+      currentCategory = btn.getAttribute('data-category') || 'all';
+      applyFilters();
+    });
+  });
+
+  // Search input
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      if (clearSearchBtn) {
+        if (searchQuery.length > 0) {
+          clearSearchBtn.classList.remove('hidden');
+        } else {
+          clearSearchBtn.classList.add('hidden');
+        }
+      }
+      applyFilters();
+    });
+  }
+
+  // Clear search button
+  if (clearSearchBtn && searchInput) {
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      clearSearchBtn.classList.add('hidden');
+      applyFilters();
+      searchInput.focus();
+    });
+  }
+
+  // Reset button
+  if (resetBtn && searchInput) {
+    resetBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+
+      filterButtons.forEach((b) => {
+        b.classList.remove('bg-[#263A30]', 'text-[#F4EBDD]');
+        b.classList.add('text-[#292720]');
+        if (b.getAttribute('data-category') === 'all') {
+          b.classList.add('bg-[#263A30]', 'text-[#F4EBDD]');
+          b.classList.remove('text-[#292720]');
+        }
+      });
+      currentCategory = 'all';
+      applyFilters();
+    });
+  }
+</script>

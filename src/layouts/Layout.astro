@@ -1,23 +1,108 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import { BRAND_INFO } from '../data/cateringData';
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  currentPath?: string;
+}
+
+const {
+  title = "FindSeleroo — Catering Premium Semarang | Hidangan Istimewa, Momen Lebih Bermakna",
+  description = "Layanan catering premium di Semarang untuk hidangan harian keluarga, nasi box kantor, prasmanan pernikahan, dan event gathering. Cita rasa nusantara istimewa.",
+  image = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
+  currentPath = Astro.url.pathname,
+} = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.toString() : "https://findseleroo.com";
+const canonicalUrl = new URL(currentPath, siteUrl).toString();
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "FoodEstablishment",
+  "name": BRAND_INFO.name,
+  "description": description,
+  "url": siteUrl,
+  "telephone": BRAND_INFO.phone,
+  "priceRange": "$$",
+  "servesCuisine": "Indonesian",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Semarang",
+    "addressRegion": "Jawa Tengah",
+    "addressCountry": "ID"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -6.9932,
+    "longitude": 110.4203
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "08:00",
+      "closes": "17:00"
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="keywords" content="Catering Semarang, Catering harian Semarang, Nasi box Semarang, Catering prasmanan Semarang, Snack box Semarang, Catering event Semarang, FindSeleroo" />
+    <meta name="author" content="FindSeleroo Catering" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content="FindSeleroo Catering" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Local SEO JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+  </head>
+  <body class="bg-[#F4EBDD] text-[#292720] min-h-screen flex flex-col font-sans antialiased selection:bg-[#B78B5B]/30 selection:text-[#263A30]">
+    <Navbar currentPath={currentPath} />
+    
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <Footer />
+    <FloatingWhatsApp />
+  </body>
+</html>

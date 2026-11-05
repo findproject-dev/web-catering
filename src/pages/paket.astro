@@ -1,0 +1,355 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { PACKAGES_LIST, BRAND_INFO, QUALITY_BADGES } from '../data/cateringData';
+import { getWhatsAppUrl } from '../utils/whatsapp';
+
+const packageCategories = [
+  { id: 'daily', label: '1. Daily Meal', desc: 'Santap harian keluarga & perorangan praktis bergizi.' },
+  { id: 'family', label: '2. Family Dining', desc: 'Kehangatan kumpul keluarga, arisan, & silaturahmi.' },
+  { id: 'office', label: '3. Office Catering', desc: 'Nasi box & bento meeting kantor profesional.' },
+  { id: 'event', label: '4. Event Catering', desc: 'Syukuran, seminar, ulang tahun, & gathering.' },
+  { id: 'wedding', label: '5. Wedding & Celebration', desc: 'Prasmanan megah pernikahan & resepsi agung.' },
+  { id: 'snack', label: '6. Snack & Coffee Break', desc: 'Kudapan rapat, rehat seminar, & coffee station.' },
+];
+
+const pricelistWaUrl = `https://wa.me/${BRAND_INFO.whatsappNumber}?text=${encodeURIComponent('Halo FindSeleroo, saya ingin meminta file brosur dan pricelist lengkap paket catering untuk diajukan ke panitia acara/kantor saya. Terima kasih!')}`;
+const initialCalcWaUrl = `https://wa.me/${BRAND_INFO.whatsappNumber}?text=${encodeURIComponent(`Halo FindSeleroo, saya tertarik dengan simulasi pemesanan:\n• Paket: ${PACKAGES_LIST[0].name}\n• Jumlah: 30 pax\n• Estimasi Total: Rp ${(PACKAGES_LIST[0].pricePerPax * 30).toLocaleString('id-ID')}\n\nBisa dibantu informasi ketersediaan tanggal dan konfirmasi rinciannya? Terima kasih!`)}`;
+---
+
+<Layout
+  title="Katalog Paket Catering — FindSeleroo Semarang"
+  description="Katalog lengkap paket catering di Semarang: Daily Meal, Family Dining, Office Box, Event Gathering, Prasmanan Pernikahan, dan Snack Box."
+  currentPath="/paket"
+>
+  <!-- Page Header -->
+  <section class="bg-[#263A30] text-[#F4EBDD] py-16 sm:py-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <span class="inline-block px-3 py-1 bg-[#B78B5B]/20 border border-[#B78B5B]/40 text-[#B78B5B] text-xs font-semibold tracking-widest uppercase mb-4 rounded-xs">
+        Pilihan Paket Komprehensif
+      </span>
+      <h1 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight mb-4">
+        Katalog Paket Catering FindSeleroo
+      </h1>
+      <p class="text-sm sm:text-base text-[#F4EBDD]/80 max-w-2xl mx-auto leading-relaxed">
+        Pilih dari enam kategori layanan catering yang dirancang sesuai skala acara, porsi nutrisi, dan kenyamanan jamuan Anda di Semarang.
+      </p>
+
+      <!-- Pricing Notice -->
+      <div class="mt-8 inline-flex flex-wrap items-center justify-center gap-4 bg-[#1b2b23] px-5 py-2.5 rounded-sm border border-[#B78B5B]/30 text-xs text-[#F4EBDD]/80">
+        <span class="flex items-center gap-1.5 text-[#B78B5B] font-semibold">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {BRAND_INFO.minOrderRule}
+        </span>
+        <span class="hidden sm:inline text-white/30">•</span>
+        <span>Harga acuan/demo dapat disesuaikan saat konsultasi resmi.</span>
+      </div>
+
+      <!-- Quick PDF Pricelist Download Action -->
+      <div class="mt-6">
+        <a
+          href={pricelistWaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#B78B5B] hover:bg-[#a67c4e] text-[#263A30] text-xs font-bold tracking-wide rounded-xs shadow transition-all"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span>Minta Pricelist PDF & Brosur via WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Budget Calculator Section -->
+  <section class="py-12 bg-white border-b border-[#263A30]/10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-[#F4EBDD]/50 border-2 border-[#B78B5B]/30 p-6 sm:p-8 rounded-sm shadow-sm">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-[#263A30]/10">
+          <div>
+            <span class="text-[0.7rem] font-bold tracking-widest uppercase text-[#B78B5B] block">Fitur Estimasi Anggaran</span>
+            <h2 class="font-serif text-xl sm:text-2xl font-bold text-[#263A30]">Kalkulator Pax & Anggaran Acara</h2>
+          </div>
+          <span class="text-xs bg-[#263A30] text-[#F4EBDD] px-3 py-1 rounded-xs self-start sm:self-auto font-medium">
+            Simulasi Cepat
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          
+          <!-- Controls -->
+          <div class="space-y-5">
+            <div>
+              <label for="calc-package" class="block text-xs font-bold uppercase tracking-wider text-[#263A30] mb-1.5">
+                Pilih Paket Catering:
+              </label>
+              <select
+                id="calc-package"
+                class="w-full px-3.5 py-2.5 bg-white border border-[#263A30]/20 rounded-xs text-sm text-[#292720] focus:outline-none focus:border-[#263A30]"
+              >
+                {PACKAGES_LIST.map((pkg) => (
+                  <option value={pkg.id} data-price={pkg.pricePerPax} data-name={pkg.name}>
+                    {pkg.name} — ({pkg.formattedPrice}/pax)
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="calc-pax" class="text-xs font-bold uppercase tracking-wider text-[#263A30]">
+                  Jumlah Pax / Porsi:
+                </label>
+                <span id="calc-pax-display" class="font-bold text-[#263A30] text-sm">30 Pax</span>
+              </div>
+              <input
+                type="range"
+                id="calc-pax"
+                min="10"
+                max="300"
+                step="5"
+                value="30"
+                class="w-full accent-[#263A30] cursor-pointer"
+              />
+              <div class="flex justify-between text-[0.68rem] text-[#292720]/60 mt-1">
+                <span>10 pax (min)</span>
+                <span>100 pax</span>
+                <span>200 pax</span>
+                <span>300+ pax</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Result Card -->
+          <div class="bg-[#263A30] text-[#F4EBDD] p-6 rounded-xs border border-[#B78B5B]/30 flex flex-col justify-between">
+            <span class="text-[0.68rem] uppercase tracking-widest text-[#B78B5B] font-semibold block mb-1">
+              Hasil Estimasi Anggaran
+            </span>
+            <div id="calc-total-display" class="font-serif text-3xl sm:text-4xl font-bold text-[#F4EBDD] my-2">
+              Rp 1.050.000
+            </div>
+            <p id="calc-detail-text" class="text-xs text-[#F4EBDD]/75 mb-4 leading-relaxed">
+              30 pax × Rp 35.000 (Paket Nasi Box Kantor Eksklusif)
+            </p>
+            
+            <a
+              id="calc-wa-btn"
+              href={initialCalcWaUrl}
+              data-wa-number={BRAND_INFO.whatsappNumber}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 w-full py-3 bg-[#B78B5B] hover:bg-[#a67c4e] text-[#263A30] font-bold text-xs tracking-wider uppercase rounded-xs transition-colors shadow"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.187-2.59-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.182-.077.357.101.174.45 1.014 1.157 1.644.912.812 1.637 1.059 1.868 1.175.231.116.368.102.506-.058.138-.16.592-.693.75-0.93.159-.237.318-.198.535-.116.217.082 1.372.646 1.609.764.237.118.395.176.453.275.058.099.058.577-.086.982z"/>
+              </svg>
+              <span>Kirim Estimasi Ini ke WhatsApp</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Quality Badges Grid -->
+  <section class="py-10 bg-[#F4EBDD] border-b border-[#263A30]/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {QUALITY_BADGES.map((b) => (
+          <div class="bg-white/80 p-4 rounded-xs border border-[#263A30]/10 flex items-start gap-3">
+            <div class="w-2 h-2 rounded-full bg-[#B78B5B] mt-1.5 shrink-0"></div>
+            <div>
+              <h4 class="font-serif font-bold text-[#263A30] text-xs sm:text-sm">{b.title}</h4>
+              <p class="text-[0.68rem] text-[#292720]/70 mt-0.5 leading-snug">{b.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Category Jump Navigation -->
+  <section class="bg-white border-b border-[#263A30]/10 sticky top-20 z-30 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        <span class="text-xs font-bold text-[#263A30] uppercase tracking-wider shrink-0 mr-2">Pilih Kategori:</span>
+        {packageCategories.map((cat) => (
+          <a
+            href={`#${cat.id}`}
+            class="px-3.5 py-1.5 rounded-xs bg-[#F4EBDD]/60 hover:bg-[#263A30] hover:text-[#F4EBDD] text-xs font-medium text-[#263A30] whitespace-nowrap transition-colors border border-[#263A30]/10"
+          >
+            {cat.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Package Categories Catalog -->
+  <section class="py-16 sm:py-24 bg-[#F4EBDD]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+      
+      {packageCategories.map((cat) => {
+        const catPackages = PACKAGES_LIST.filter(p => p.category === cat.id);
+        return (
+          <div id={cat.id} class="scroll-mt-36">
+            
+            <!-- Category Title & Description -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-[#263A30]/15 gap-4">
+              <div>
+                <span class="text-xs font-semibold tracking-widest uppercase text-[#B78B5B] block mb-1">Kategori Paket</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[#263A30]">{cat.label}</h2>
+                <p class="text-xs sm:text-sm text-[#292720]/75 mt-1">{cat.desc}</p>
+              </div>
+              <div class="text-xs text-[#263A30] font-medium bg-white/70 px-3 py-1.5 rounded-xs border border-[#263A30]/10 self-start md:self-auto">
+                Min. Pemesanan: 10 Pax
+              </div>
+            </div>
+
+            <!-- Packages Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {catPackages.map((pkg) => {
+                const pkgWaUrl = getWhatsAppUrl('package', { name: pkg.name, pax: pkg.minPax });
+                return (
+                  <div class="bg-white border border-[#263A30]/10 rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div class="aspect-[16/10] overflow-hidden relative">
+                      <img
+                        src={pkg.image}
+                        alt={pkg.name}
+                        class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                        loading="lazy"
+                      />
+                      {pkg.isPopular && (
+                        <span class="absolute top-3 right-3 bg-[#B78B5B] text-[#263A30] px-2.5 py-1 text-[0.68rem] font-bold tracking-wider uppercase rounded-xs shadow">
+                          Favorit
+                        </span>
+                      )}
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow">
+                      <h3 class="font-serif text-xl font-bold text-[#263A30] mb-2">{pkg.name}</h3>
+                      <div class="text-2xl font-serif font-bold text-[#B78B5B] mb-1">
+                        {pkg.formattedPrice}
+                        <span class="text-xs font-sans font-normal text-[#292720]/60"> / pax</span>
+                      </div>
+                      <p class="text-[0.72rem] text-[#292720]/60 mb-3">Min. pesanan {pkg.minPax} pax</p>
+                      
+                      <p class="text-xs text-[#292720]/75 leading-relaxed mb-6">
+                        {pkg.description}
+                      </p>
+
+                      <div class="bg-[#F4EBDD]/40 p-4 rounded-xs mb-6 flex-grow">
+                        <span class="text-[0.68rem] tracking-wider uppercase font-semibold text-[#263A30] block mb-2">Komposisi Menu Termasuk:</span>
+                        <ul class="space-y-1.5 text-xs text-[#292720]/80">
+                          {pkg.includedItems.map((item) => (
+                            <li class="flex items-start gap-2">
+                              <svg class="w-3.5 h-3.5 text-[#B78B5B] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span class="leading-tight">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div class="mt-auto pt-2">
+                        <a
+                          href={pkgWaUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="inline-flex items-center justify-center w-full py-3 bg-[#263A30] hover:bg-[#1a2820] text-[#F4EBDD] text-xs font-semibold tracking-wider uppercase transition-colors rounded-xs shadow"
+                        >
+                          Pesan Paket Ini via WhatsApp
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+          </div>
+        );
+      })}
+
+    </div>
+  </section>
+
+  <!-- Custom Package Consultation Section -->
+  <section class="py-20 bg-white border-t border-[#263A30]/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-[#263A30] text-[#F4EBDD] p-8 sm:p-12 lg:p-16 rounded-sm shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <div class="lg:col-span-8 space-y-4">
+          <span class="text-xs font-semibold tracking-widest uppercase text-[#B78B5B] block">Butuh Penyesuaian?</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold leading-tight">
+            Ingin Menggabungkan Menu atau Request Paket Spesial?
+          </h2>
+          <p class="text-sm text-[#F4EBDD]/80 leading-relaxed max-w-2xl">
+            Seluruh paket di atas dapat disesuaikan dengan kebutuhan Anda. Kami dapat menambahkan stall gubukan, pilihan dessert khusus, hingga pergantian lauk sesuai selera keluarga atau audiens acara Anda.
+          </p>
+          <p class="text-xs text-[#B78B5B]">
+            *Harga final akan dihitung secara transparan dan disepakati bersama sebelum konfirmasi pesanan.
+          </p>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col items-start lg:items-end justify-center">
+          <a
+            href={getWhatsAppUrl('custom', { event: 'Kebutuhan Custom Paket Catering' })}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2.5 px-8 py-4 bg-[#B78B5B] hover:bg-[#a67c4e] text-[#263A30] font-bold text-sm tracking-wide rounded-xs shadow-lg transition-all"
+          >
+            <span>Konsultasi Paket Custom</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Budget Calculator logic
+  const packageSelect = document.getElementById('calc-package') as HTMLSelectElement;
+  const paxSlider = document.getElementById('calc-pax') as HTMLInputElement;
+  const paxDisplay = document.getElementById('calc-pax-display');
+  const totalDisplay = document.getElementById('calc-total-display');
+  const detailText = document.getElementById('calc-detail-text');
+  const waBtn = document.getElementById('calc-wa-btn') as HTMLAnchorElement;
+
+  function updateCalculation() {
+    if (!packageSelect || !paxSlider || !paxDisplay || !totalDisplay || !detailText || !waBtn) return;
+
+    const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+    const price = parseInt(selectedOption.getAttribute('data-price') || '0', 10);
+    const packageName = selectedOption.getAttribute('data-name') || '';
+    const pax = parseInt(paxSlider.value, 10);
+
+    const total = price * pax;
+    const formattedTotal = 'Rp ' + total.toLocaleString('id-ID');
+    const formattedPrice = 'Rp ' + price.toLocaleString('id-ID');
+
+    paxDisplay.textContent = `${pax} Pax`;
+    totalDisplay.textContent = formattedTotal;
+    detailText.textContent = `${pax} pax × ${formattedPrice} (${packageName})`;
+
+    const waNumber = waBtn.getAttribute('data-wa-number') || '6281234567890';
+    const waText = `Halo FindSeleroo, saya tertarik dengan simulasi pemesanan:\n• Paket: ${packageName}\n• Jumlah: ${pax} pax\n• Estimasi Total: ${formattedTotal}\n\nBisa dibantu informasi ketersediaan tanggal dan konfirmasi rinciannya? Terima kasih!`;
+    waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(waText)}`;
+  }
+
+  if (packageSelect && paxSlider) {
+    packageSelect.addEventListener('change', updateCalculation);
+    paxSlider.addEventListener('input', updateCalculation);
+    updateCalculation();
+  }
+</script>

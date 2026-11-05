@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #F4EBDD;
+  --color-green: #263A30;
+  --color-gold: #B78B5B;
+  --color-charcoal: #292720;
+  --color-white: #FFFFFF;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #F4EBDD;
+    color: #292720;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    background-color: #263A30;
+    color: #F4EBDD;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: 2px solid #263A30;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #1a2820;
+    border-color: #1a2820;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    background-color: transparent;
+    color: #F4EBDD;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: 2px solid #F4EBDD;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #F4EBDD;
+    color: #263A30;
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    background-color: transparent;
+    color: #263A30;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: 2px solid #263A30;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .btn-outline:hover {
+    background-color: #263A30;
+    color: #F4EBDD;
+  }
+
+  .btn-wa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #25D366;
+    color: #FFFFFF;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+  }
+
+  .btn-wa:hover {
+    background-color: #1DA851;
+  }
+
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #B78B5B;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #263A30;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: #4a4a42;
+    max-width: 600px;
+  }
+
+  .card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(41, 39, 32, 0.12);
+  }
+
+  .divider-gold {
+    width: 3rem;
+    height: 2px;
+    background-color: #B78B5B;
+  }
+
+  .img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .img-food {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .img-food img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+  }
+
+  .img-food:hover img {
+    transform: scale(1.04);
+  }
+}
